@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lemures Lemniscati <lemures.lemniscati@gmail.com>
+Date: Sat, 17 Oct 2020 13:40:40 +0900
+Subject: [PATCH] 1.6 prog_util cygwin
+
+
+diff --git a/programs/prog_util.c b/programs/prog_util.c
+index 49a7af4..71d0d3d 100644
+--- a/programs/prog_util.c
++++ b/programs/prog_util.c
+@@ -54,7 +54,9 @@
+ #endif
+ 
+ /* The invocation name of the program (filename component only) */
++#ifndef __CYGWIN__
+ const tchar *program_invocation_name;
++#endif
+ 
+ static void
+ do_msg(const char *format, bool with_errno, va_list va)
+diff --git a/programs/prog_util.h b/programs/prog_util.h
+index 6bc4599..f10f740 100644
+--- a/programs/prog_util.h
++++ b/programs/prog_util.h
+@@ -133,7 +133,11 @@ int wmain(int argc, wchar_t **argv);
+ 
+ #endif /* !_WIN32 */
+ 
++#ifdef __CYGWIN__
++extern __IMPORT char *program_invocation_name; /* Declared in sys/errno.h */
++#else /* __CYGWIN__ */
+ extern const tchar *program_invocation_name;
++#endif/* ! __CYGWIN__ */
+ 
+ void _printf(1, 2) msg(const char *fmt, ...);
+ void _printf(1, 2) msg_errno(const char *fmt, ...);
