@@ -1,6 +1,6 @@
 ################################
 NAME=libdeflate
-VERSION=1.6
+VERSION=1.7
 RELEASE=1
 
 ################################
@@ -25,7 +25,8 @@ HOMEPAGE="https://github.com/ebiggers/libdeflate"
 ################################
 GIT_REPO="https://github.com/ebiggers/libdeflate"
 declare -A GIT_DATEHASH_BY_NAME=(
-# git log -1 --date=iso-strict --format='%cd/%H' v1.6
+# git log -1 --date=iso-strict --format='%cd/%H' v1.7
+  [1.7]=2020-11-09T19:29:50-08:00/448e3f3b042219bccb0080e393ba3eb68c2091d5
   [1.6]=2020-05-12T19:42:04-07:00/753d4a1a625efb478f845f1c4d3869a41f710ae5
 )
 REV_HASH="${GIT_DATEHASH_BY_NAME[${VERSION}]#*/}"
@@ -108,13 +109,19 @@ printf -v "${THIS_VN}_REQUIRES" "%s" "\
 src_compile() {
         lndirs
         cd ${B}
-        PREFIX=/usr cygmake
+
+        PREFIX=/usr \
+        USE_SHARED_LIB=1 \
+        cygmake
 }
 
 ################################
 src_install() {
         cd ${B}
-        PREFIX=/usr cyginstall
+
+        PREFIX=/usr \
+        USE_SHARED_LIB=1 \
+        cyginstall
 }
 
 ################################
