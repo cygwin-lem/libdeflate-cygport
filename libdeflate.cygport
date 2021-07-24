@@ -45,6 +45,12 @@ ABI=0
 ## Requirements for building
 ################################
 BUILD_REQUIRES="\
+  zlib-devel\
+"
+
+# Here are packages unnecessary for building but necessary for testing
+TEST_REQUIRES="\
+  zlib-devel\
 "
 
 ################################
