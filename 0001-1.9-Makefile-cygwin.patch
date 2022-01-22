@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lemures Lemniscati <lemures.lemniscati@gmail.com>
+Date: Sat, 22 Jan 2022 12:54:53 +0900
+Subject: [PATCH] 1.9 Makefile cygwin
+
+---
+ Makefile | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 0e8b008..669851f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -114,6 +114,15 @@ ifneq ($(findstring -mingw,$(TARGET_MACHINE)),)
+                 sed -E 's/g?cc(-?[0-9]+(\.[0-9]+)*)?(\.exe)?$$/ar\3/')
+     endif
+ 
++# Compiling for Cygwin?
++else ifneq ($(findstring -cygwin,$(TARGET_MACHINE)),)
++   SHARED_LIB         := cygdeflate-$(SOVERSION).dll
++   SHARED_LIB_SYMLINK :=
++   SHARED_LIB_CFLAGS  :=
++   SHARED_LIB_LDFLAGS := -Wl,--out-implib=libdeflate.dll.a \
++                         -Wl,--export-all-symbols
++   PROG_SUFFIX        := .exe
++
+ # Compiling for macOS?
+ else ifneq ($(findstring -darwin,$(TARGET_MACHINE)),)
+    SHARED_LIB         := libdeflate.$(SOVERSION).dylib
+@@ -329,9 +338,10 @@ PKGCONFBASE := libdeflate.pc.in
+ install:all $(PKGCONFBASE)
+ 	install -d $(DESTDIR)$(LIBDIR)/pkgconfig $(DESTDIR)$(INCDIR)	\
+ 		$(DESTDIR)$(BINDIR)
+-	install -m644 $(STATIC_LIB) $(DESTDIR)$(LIBDIR)
++	#install -m644 $(STATIC_LIB) $(DESTDIR)$(LIBDIR)
+ 	if [ -z "$(DISABLE_SHARED)" ]; then				\
+-		install -m755 $(SHARED_LIB) $(DESTDIR)$(LIBDIR);	\
++		#install -m755 $(SHARED_LIB) $(DESTDIR)$(LIBDIR);	\
++		install -m755 $(SHARED_LIB) $(DESTDIR)$(BINDIR);	\
+ 	fi
+ 	sed -e "s|@PREFIX@|$(PREFIX)|"					\
+ 	    -e "s|@LIBDIR@|$(LIBDIR)|"					\
+@@ -348,10 +358,11 @@ install:all $(PKGCONFBASE)
+ 		ln -sf $(SHARED_LIB)					\
+ 		       $(DESTDIR)$(LIBDIR)/$(SHARED_LIB_SYMLINK);	\
+ 	fi
++	install -m755 libdeflate.dll.a $(DESTDIR)$(LIBDIR)
+ 
+ uninstall:
+ 	rm -f $(DESTDIR)$(LIBDIR)/$(STATIC_LIB)				\
+-	      $(DESTDIR)$(LIBDIR)/$(SHARED_LIB)				\
++	      $(DESTDIR)$(BINDIR)/$(SHARED_LIB)				\
+ 	      $(DESTDIR)$(LIBDIR)/pkgconfig/libdeflate.pc		\
+ 	      $(DESTDIR)$(INCDIR)/libdeflate.h				\
+ 	      $(DESTDIR)$(BINDIR)/libdeflate-gzip$(PROG_SUFFIX)		\
+@@ -359,6 +370,7 @@ uninstall:
+ 	if [ -n "$(SHARED_LIB_SYMLINK)" ]; then				\
+ 		rm -f $(DESTDIR)$(LIBDIR)/$(SHARED_LIB_SYMLINK);	\
+ 	fi
++	rm -f $(DESTDIR)$(LIBDIR)/libdeflate.dll.a
+ 
+ test_programs:$(TEST_PROGRAMS)
+ 
+-- 
+2.34.1
+
