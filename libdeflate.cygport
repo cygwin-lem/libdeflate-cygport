@@ -20,6 +20,10 @@ optional high compression modes that provide a better compression
 ratio than the zlib's 'level 9'."
 HOMEPAGE="https://github.com/ebiggers/libdeflate"
 
+LICENSE="MIT"
+# cf. https://www.cygwin.com/packaging-hint-files.html#pvr-src.hint
+#     https://spdx.org/licenses/MIT.html
+
 ################################
 ## Source from a git repository
 ################################
