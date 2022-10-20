@@ -1,0 +1,7 @@
+category: Debug
+requires: cygwin-debuginfo
+external-source: libdeflate
+sdesc: "Debug info for libdeflate"
+ldesc: "This package contains files necessary for debugging the
+libdeflate package with gdb."
+
