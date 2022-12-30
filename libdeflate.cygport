@@ -1,7 +1,10 @@
 ################################
 NAME=libdeflate
-VERSION=1.14
+VERSION=1.15
 RELEASE=1
+
+################################
+inherit cmake
 
 ################################
 CATEGORY="Archive"
@@ -30,6 +33,7 @@ LICENSE="MIT"
 GIT_REPO="https://github.com/ebiggers/libdeflate"
 declare -A GIT_DATEHASH_BY_NAME=(
   # git log --date=iso-strict --format='%cd/%H' -1
+  [1.15]=2022-12-04T20:40:10-08:00/v1.15
   [1.14]=2022-09-10T21:13:50-05:00/v1.14
   [1.13]=2022-08-04T23:21:51-07:00/v1.13
   [1.12]=2022-06-12T12:52:59-07:00/v1.12
@@ -116,38 +120,11 @@ printf -v "${THIS_VN}_CATEGORY" "%s" "Devel Libs ${CATEGORY}"
 printf -v "${THIS_VN}_SUMMARY"  "%s" "${SUMMARY% *} (devel)"
 printf -v "${THIS_VN}_CONTENTS" "%s" "\
   usr/include/ \
+  usr/lib/cmake/ \
   usr/lib/lib* \
   usr/lib/pkgconfig/ \
 "
 printf -v "${THIS_VN}_REQUIRES" "%s" "\
 "
-
-################################
-src_compile() {
-        lndirs
-        cd ${B}
-
-        PREFIX=/usr \
-        USE_SHARED_LIB=1 \
-        cygmake
-}
-
-################################
-src_install() {
-        cd ${B}
-
-        PREFIX=/usr \
-        USE_SHARED_LIB=1 \
-        cyginstall
-}
-
-################################
-src_test() {
-        cd ${B}
-
-        PREFIX=/usr \
-        USE_SHARED_LIB=1 \
-        cygtest
-}
 
 ################################
