@@ -1,6 +1,6 @@
 ################################
 NAME=libdeflate
-VERSION=1.23
+VERSION=1.24
 RELEASE=1
 
 ################################
@@ -33,6 +33,7 @@ LICENSE="MIT"
 GIT_REPO="https://github.com/ebiggers/libdeflate"
 declare -A GIT_DATEHASH_BY_NAME=(
   # git log --date=iso-strict --format='%cd/%H' -1
+  [1.24]=2025-05-11T12:02:37-07:00/v1.24
   [1.23]=2024-12-10T22:30:24-08:00/v1.23
   [1.22]=2024-10-05T11:47:47-07:00/v1.22
   [1.21]=2024-08-03T16:13:56-07:00/v1.21
