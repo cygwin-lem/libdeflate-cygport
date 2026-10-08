@@ -1,6 +1,6 @@
 ################################
 NAME=libdeflate
-VERSION=1.25
+VERSION=1.26
 RELEASE=1
 
 ################################
@@ -33,6 +33,7 @@ LICENSE="MIT"
 GIT_REPO="https://github.com/ebiggers/libdeflate"
 declare -A GIT_DATEHASH_BY_NAME=(
   # git log --date=iso-strict --format='%cd/%H' -1
+  [1.26]=2026-08-22T09:05:42-07:00/92e6a0db9fa848d742f9eb286c92afc60f2c3dda/v1.26
   [1.25]=2025-10-31T19:19:27-07:00/v1.25
   [1.24]=2025-05-11T12:02:37-07:00/v1.24
   [1.23]=2024-12-10T22:30:24-08:00/v1.23
@@ -54,11 +55,11 @@ declare -A GIT_DATEHASH_BY_NAME=(
   [1.7]=2020-11-09T19:29:50-08:00/v1.7
   [1.6]=2020-05-12T19:42:04-07:00/v1.6
 )
-REV_HASH="${GIT_DATEHASH_BY_NAME[${VERSION}]#*/}"
-REV_DATE="${GIT_DATEHASH_BY_NAME[${VERSION}]%/*}"
+REV_HASH="${GIT_DATEHASH_BY_NAME[${VERSION}]##*/}"
+REV_DATE="${GIT_DATEHASH_BY_NAME[${VERSION}]%%/*}"
 REV_DATE_SHORT="${REV_DATE%%T*}"
 GIT_BASENAME="${GIT_REPO##*/}"
-SRC_URI="${GIT_REPO}/archive/${REV_HASH}/${GIT_BASENAME}-${VERSION}.tar.gz"
+SRC_URI="${GIT_REPO}/archive/${REV_HASH}/${GIT_BASENAME}-${REV_HASH}.tar.gz"   # GitHub
 SRC_DIR="${GIT_BASENAME}-${REV_HASH#v}"
 
 ################################
